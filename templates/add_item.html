@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>添加失物</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px; }
+        input, textarea { width: 100%; padding: 8px; margin: 5px 0; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>📦 登记失物</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <label>物品编号：</label>
+        <input type="text" name="number" placeholder="例如：A001" required>
+        <label>特征描述（越详细越好）：</label>
+        <textarea name="description" rows="4" placeholder="例如：黑色双肩包，品牌耐克，金色拉链，底部有磨损" required></textarea>
+        <label>存放位置：</label>
+        <input type="text" name="location" placeholder="例如：3号收纳箱" required>
+        <label>上传图片（可选，可多选）：</label>
+        <input type="file" name="images" accept="image/*" multiple>
+        <br><br>
+        <button type="submit">提交</button>
+    </form>
+    <br>
+    <a href="/search">→ 去搜索失物</a>
+    <a href="/admin">🔧 管理物品</a>
+</body>
+</html>

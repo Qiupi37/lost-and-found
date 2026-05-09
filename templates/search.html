@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>寻找失物</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        .result { border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; background: #f9f9f9; }
+        img { max-width: 150px; margin: 5px; border-radius: 4px; }
+        textarea { width: 100%; padding: 10px; box-sizing: border-box; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; margin-top: 5px; }
+        .score { color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>🔍 描述你丢的东西</h2>
+    <form method="POST">
+        <textarea name="query" rows="3" placeholder="比如：一个粉色保温杯，盖子有点漏水，上面贴了卡通贴纸">{{ query }}</textarea>
+        <br>
+        <button type="submit">智能匹配</button>
+    </form>
+
+    {% if message %}
+        <p style="color:#d9534f;">{{ message }}</p>
+    {% endif %}
+
+    {% if results %}
+        <h3>可能的结果（相似度从高到低）</h3>
+        {% for item in results %}
+        <div class="result">
+            <strong>编号：{{ item.number }}</strong> ｜ 存放位置：{{ item.location }}<br>
+            描述：{{ item.description }}<br>
+            匹配度：<span class="score">{{ item.score }}</span><br>
+            {% if item.images %}
+                <div>
+                {% for img in item.images %}
+                    <img src="{{ url_for('static', filename='uploads/' + img) }}" alt="物品图">
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% elif request.method == 'POST' and not message %}
+        <p>没有找到匹配的物品。</p>
+    {% endif %}
+
+    <br>
+    <a href="/add">→ 登记新物品</a>
+    <a href="/admin">🔧 管理物品</a>
+</body>
+</html>

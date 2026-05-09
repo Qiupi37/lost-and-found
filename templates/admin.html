@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>管理失物</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        button { background: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #c9302c; }
+        a { color: #007bff; text-decoration: none; }
+        img { max-height: 60px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <h2>📋 失物招领管理</h2>
+    <a href="/add">→ 添加新物品</a> | 
+    <a href="/search">→ 搜索页面</a>
+    <hr>
+    {% if items %}
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>描述</th>
+                <th>位置</th>
+                <th>照片</th>
+                <th>操作</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+                <td>
+                    {% if item[4] %}
+                        {% for img in item[4].split(',') %}
+                            <img src="{{ url_for('static', filename='uploads/' + img) }}" alt="">
+                        {% endfor %}
+                    {% else %}
+                        无
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" onsubmit="return confirm('确定要删除 {{ item[1] }} 吗？此操作不可恢复。')">
+                        <input type="hidden" name="delete_id" value="{{ item[0] }}">
+                        <button type="submit">删除</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>当前没有登记任何物品。</p>
+    {% endif %}
+</body>
+</html>

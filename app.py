@@ -33,7 +33,7 @@ init_db()   # 应用启动时自动执行
 
 # 加载AI模型（在 Render 上会自动从 HuggingFace 下载，速度很快）
 print("正在加载AI模型（请耐心等待，下载中...）")
-model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
+model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
 print("模型就绪！")
 
 
